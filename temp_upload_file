@@ -1,0 +1,58 @@
+import streamlit as st
+import pandas as pd
+import plotly.express as px
+import requests
+
+# Set page layout
+st.set_page_config(page_title="F1 Pulse Dashboard", layout="wide")
+
+# Custom title
+st.markdown("<h1 style='text-align: center; color: red;'>F1 Pulse: Real-Time Race Insights</h1>", unsafe_allow_html=True)
+st.markdown("<h3 style='text-align: center; color: grey;'>Get the pulse of the race with real-time data and analysis!</h3>", unsafe_allow_html=True)
+
+# Sidebar for user inputs
+st.sidebar.title("Race Selection")
+season = st.sidebar.selectbox("Select Season", ["2023", "2022", "2021", "2020"])
+race = st.sidebar.selectbox("Select Race", ["Monaco GP", "Silverstone GP", "Spa GP"])
+
+# Placeholder for real-time data (mock data for now)
+st.sidebar.markdown("**Live Race Updates**")
+st.sidebar.write("Driver in Lead: Lewis Hamilton")
+st.sidebar.write("Fastest Lap: Max Verstappen - 1:35:08")
+
+# Fetching race data (mock API call)
+st.markdown("### Lap Times Overview")
+st.markdown("Real-time and historical race data at your fingertips!")
+
+# Dummy Data (since we don't have real-time API access for now)
+lap_times = {
+    "Driver": ["Hamilton", "Verstappen", "Leclerc", "Norris", "Perez"],
+    "Lap 1": [78.3, 79.1, 79.5, 80.2, 80.7],
+    "Lap 2": [78.0, 78.9, 79.3, 80.1, 80.4],
+    "Lap 3": [77.8, 78.6, 79.0, 80.0, 80.3]
+}
+
+df_laps = pd.DataFrame(lap_times)
+
+# Display data table
+st.write(df_laps)
+
+# Visualize Lap Times with Plotly
+st.markdown("### Lap Time Comparison")
+st.markdown("Compare lap times across drivers.")
+
+# Melt the dataframe to be used in a Plotly chart
+df_melted = pd.melt(df_laps, id_vars="Driver", var_name="Lap", value_name="Time")
+
+# Create Plotly figure
+fig = px.line(df_melted, x="Lap", y="Time", color="Driver", title="Lap Time Analysis", markers=True)
+st.plotly_chart(fig)
+
+# Add a section for future live data integration
+st.markdown("### Upcoming Features")
+st.info("Stay tuned for real-time data integration, driver performance metrics, and much more!")
+
+# Footer
+st.markdown("<hr>", unsafe_allow_html=True)
+st.markdown("<footer style='text-align: center;'>Developed by Team SpeedShift for KAKNOS 2024</footer>", unsafe_allow_html=True)
+
